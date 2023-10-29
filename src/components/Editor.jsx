@@ -20,6 +20,7 @@ const Editor = ({
         text={"Editor"}
       />
       <textarea
+        className="p-3"
         name="editor"
         id="editor"
         cols="60"

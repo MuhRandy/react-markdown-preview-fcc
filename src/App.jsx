@@ -1,17 +1,31 @@
-import { marked } from "marked";
+import { Marked } from "marked";
 import { useState } from "react";
 import Editor from "./components/Editor";
 import Preview from "./components/Preview";
 import LayoutToggle from "./components/LayoutToggle";
 import clsx from "clsx";
+import { markedHighlight } from "marked-highlight";
+import hljs from "highlight.js";
 
 function App() {
+  const marked = new Marked(
+    markedHighlight({
+      langPrefix: "hljs language-",
+      highlight(code, lang) {
+        const language = hljs.getLanguage(lang) ? lang : "plaintext";
+        return hljs.highlight(code, { language }).value;
+      },
+    })
+  );
+
+  marked.use({ breaks: true });
+
   const defaultMarkdown =
     "# Welcome to my React Markdown Previewer!\n\n" +
     "## This is a sub-heading...\n\n" +
     "### And here's some other cool stuff:\n\n" +
     "Heres some code, `<div></div>`, between 2 backticks.\n\n" +
-    "~~~js\n" +
+    "~~~javascript\n" +
     "// this is multi-line code:\n\n" +
     "function anotherExample(firstLine, lastLine) {\n" +
     "  if (firstLine == '```' && lastLine == '```') {\n" +
