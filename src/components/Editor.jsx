@@ -1,30 +1,35 @@
-import { IconEdit } from "@tabler/icons-react";
-import Header from "./Header";
-import clsx from "clsx";
+import { IconEdit } from '@tabler/icons-react';
+import Header from './Header';
+import clsx from 'clsx';
+import { cn } from '../utils';
 
 const Editor = ({
   maximizeEditor,
   maximizePreview,
+  sideBySide,
   handleChange,
   handleClick,
   input,
 }) => {
   return (
     <div
-      className={clsx("shadow-xl shadow-black", { hidden: maximizePreview })}
+      className={clsx('shadow-sm shadow-black', {
+        hidden: maximizePreview,
+      })}
     >
       <Header
         handleClick={handleClick}
         maximize={maximizeEditor}
         icon={<IconEdit className="absolute left-0" />}
-        text={"Editor"}
+        text={'Editor'}
       />
       <textarea
-        className="p-3"
+        className={cn('min-w-[100vw] px-1 min-h-[40vh]', 'sm:min-w-[90vw]', {
+          'min-h-[95vh]': maximizeEditor,
+          'sm:min-w-[50vw]': sideBySide,
+        })}
         name="editor"
         id="editor"
-        cols="60"
-        rows={`${maximizeEditor ? "24" : "20"}`}
         onChange={handleChange}
         value={input}
       />
